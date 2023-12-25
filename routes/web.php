@@ -27,7 +27,20 @@ Route::get('/', function () {
  * 本を追加
  */
 Route::post('/books', function (Request $request){
-    //
+    // dd($request);
+
+    // バリデーション
+    $validator = Validator::make($request->all(), ['item_name' => 'required|max:255',]);
+
+    // Eloquentモデル（登録処理）
+    $books = new Book;
+    $books->item_name = $request->item_name;
+    $books->item_number = '1';
+    $books->item_amount = '1000';
+    $books->published = '2017-03-07 00:00:00';
+    $books->save();
+    return redirect('/');
+
 });
 
 /**
